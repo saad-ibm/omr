@@ -117,8 +117,6 @@ static TR_PrexArgument *strongerArgumentInfo(TR_PrexArgument *left, TR_PrexArgum
         return left ? left : right; // Return non-null prex argument when possible
 }
 
-printf("Reachead line 120 of PreExistence.cpp\n");
-
 TR_PrexArgInfo *TR_PrexArgInfo::enhance(TR_PrexArgInfo *dest, TR_PrexArgInfo *source, TR::Compilation *comp)
 {
     // If dest is NULL, we can't simply return source, as TR_PrexArgInfo is mutable, any
