@@ -5490,7 +5490,7 @@ TR_CallTarget *TR_CallSite::addTarget(TR_Memory *mem, TR_InlinerBase *inliner, T
 
     // Merge call site prex arginfo into `myPrexArgInfo`
     if (myPrexArgInfo && _ecsPrexArgInfo) {
-        printf("Reachead line 5493 of Inliner.cpp\n");
+        //printf("Reachead line 5493 of Inliner.cpp\n");
         TR_PrexArgInfo::enhance(myPrexArgInfo, _ecsPrexArgInfo, _comp);
     } else if (_ecsPrexArgInfo) {
         // Clone call site prex arg info
