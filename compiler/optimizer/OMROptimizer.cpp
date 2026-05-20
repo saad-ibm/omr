@@ -1397,11 +1397,9 @@ int32_t OMR::Optimizer::performOptimization(const OptimizationStrategy *optimiza
             break;
 
         case IfLoopsAndNotProfiling: {
-            printf("should run prof?\n");
             if (comp()->mayHaveLoops() && !comp()->isProfilingCompilation()) {
                 doThisOptimization = true;
         } else {
-            printf("profiling: %d\n", comp()->isProfilingCompilation());
         }
             break;
         }
