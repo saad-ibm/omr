@@ -9566,6 +9566,16 @@ TR::Node *constrainSwitch(OMR::ValuePropagation *vp, TR::Node *node)
     OMR::Logger *log = vp->comp()->log();
     TR::Node *myParent = vp->getCurrentParent();
     vp->setCurrentParent(node);
+    int32_t valueNumber = vp->getValueNumber(node->getFirstChild());
+    if (valueNumber >= vp->_firstUnresolvedSymbolValueNumber)
+       {
+       vp->_reachedMaxRelationDepth = true;
+       if (vp->trace())
+          logprintf(vp->trace(), vp->comp()->log(), "Aborting Value Propagation - node value number %d exceeds limit %d\n",
+              valueNumber, vp->_firstUnresolvedSymbolValueNumber);
+       vp->setCurrentParent(myParent);
+       return node;
+       }
     vp->launchNode(node->getFirstChild(), node, 0);
     vp->setCurrentParent(myParent);
 
@@ -9833,6 +9843,15 @@ static int32_t handleNullCheck(OMR::ValuePropagation *vp, TR::Node *node, bool r
 
     // Process the reference child.
     //
+    int32_t valueNumber = vp->getValueNumber(referenceChild);
+    if (valueNumber >= vp->_firstUnresolvedSymbolValueNumber)
+       {
+       vp->_reachedMaxRelationDepth = true;
+       if (vp->trace())
+          logprintf(vp->trace(), vp->comp()->log(), "Aborting Value Propagation - node value number %d exceeds limit %d\n",
+              valueNumber, vp->_firstUnresolvedSymbolValueNumber);
+       return 0;
+       }
     vp->launchNode(referenceChild, node, 0);
 
     // If the reference child has a non-null constraint the null check can be

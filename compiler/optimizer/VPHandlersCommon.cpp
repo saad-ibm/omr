@@ -70,6 +70,15 @@ TR::Node *constrainChildren(OMR::ValuePropagation *vp, TR::Node *node)
     TR::Node *myParent = vp->getCurrentParent();
     for (int32_t i = node->getNumChildren() - 1; i >= 0; i--) {
         vp->setCurrentParent(node);
+        int32_t valueNumber = vp->getValueNumber(node->getChild(i));
+        if (valueNumber >= vp->_firstUnresolvedSymbolValueNumber)
+           {
+           vp->_reachedMaxRelationDepth = true;
+           if (vp->trace())
+              logprintf(vp->trace(), vp->comp()->log(), "Aborting Value Propagation - node value number %d exceeds limit %d\n",
+                  valueNumber, vp->_firstUnresolvedSymbolValueNumber);
+           break;
+           }
         vp->launchNode(node->getChild(i), node, i);
     }
     vp->setCurrentParent(myParent);
@@ -81,6 +90,15 @@ TR::Node *constrainChildrenFirstToLast(OMR::ValuePropagation *vp, TR::Node *node
     TR::Node *myParent = vp->getCurrentParent();
     for (int32_t i = 0; i < node->getNumChildren(); i++) {
         vp->setCurrentParent(node);
+        int32_t valueNumber = vp->getValueNumber(node->getChild(i));
+        if (valueNumber >= vp->_firstUnresolvedSymbolValueNumber)
+           {
+           vp->_reachedMaxRelationDepth = true;
+           if (vp->trace())
+              logprintf(vp->trace(), vp->comp()->log(), "Aborting Value Propagation - node value number %d exceeds limit %d\n",
+                  valueNumber, vp->_firstUnresolvedSymbolValueNumber);
+           break;
+           }
         vp->launchNode(node->getChild(i), node, i);
     }
     vp->setCurrentParent(myParent);
@@ -101,6 +119,15 @@ TR::Node *constrainVcall(OMR::ValuePropagation *vp, TR::Node *node)
     vp->transformArrayCopyCall(node);
     if (node->getOpCodeValue() == TR::arraycopy) {
         node->setVisitCount(0);
+        int32_t valueNumber = vp->getValueNumber(node);
+        if (valueNumber >= vp->_firstUnresolvedSymbolValueNumber)
+           {
+           vp->_reachedMaxRelationDepth = true;
+           if (vp->trace())
+              logprintf(vp->trace(), vp->comp()->log(), "Aborting Value Propagation - node value number %d exceeds limit %d\n",
+                  valueNumber, vp->_firstUnresolvedSymbolValueNumber);
+           return node;
+           }
         vp->launchNode(node, vp->getCurrentParent(), 0);
         return node;
     }

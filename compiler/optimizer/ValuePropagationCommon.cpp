@@ -614,6 +614,17 @@ void OMR::ValuePropagation::processTrees(TR::TreeTop *startTree, TR::TreeTop *en
         if (canCauseOSR(treeTop, comp()))
             createExceptionEdgeConstraints(TR::Block::CanCatchOSR, NULL, treeTopNode);
 
+        // Check if this node's value number would exceed the limit
+        int32_t valueNumber = getValueNumber(treeTopNode);
+        if (valueNumber >= _firstUnresolvedSymbolValueNumber)
+           {
+           _reachedMaxRelationDepth = true;
+           if (trace())
+              logprintf(trace(), comp()->log(), "Aborting Value Propagation - node value number %d exceeds limit %d\n",
+                  valueNumber, _firstUnresolvedSymbolValueNumber);
+           break;
+           }
+
         launchNode(treeTopNode, NULL, 0);
 
         if (changedNode) {
