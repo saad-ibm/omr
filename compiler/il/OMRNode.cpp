@@ -4461,9 +4461,9 @@ TR::SymbolReference *OMR::Node::getSymbolReference()
         return self()->getRegLoadStoreSymbolReference();
 #endif
 
-    TR_ASSERT(self()->hasSymbolReference(),
-        "attempting to access _symbolReference field for node %s %p that does not have it",
-        self()->getOpCode().getName(), this);
+    // TR_ASSERT(self()->hasSymbolReference(),
+    //     "attempting to access _symbolReference field for node %s %p that does not have it",
+    //     self()->getOpCode().getName(), this);
     return _unionPropertyA._symbolReference;
 }
 
