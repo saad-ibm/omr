@@ -66,6 +66,7 @@
 #include "infra/List.hpp"
 #include "infra/SimpleRegex.hpp"
 #include "infra/CfgEdge.hpp"
+#include "optimizer/OMROptimization_inlines.hpp"
 #include "optimizer/Optimization_inlines.hpp"
 #include "optimizer/OptimizationManager.hpp"
 #include "optimizer/Optimizations.hpp"

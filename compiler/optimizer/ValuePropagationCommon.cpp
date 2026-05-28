@@ -73,6 +73,7 @@
 #include "infra/Timer.hpp"
 #include "optimizer/Inliner.hpp"
 #include "optimizer/Optimization.hpp"
+#include "optimizer/OMROptimization_inlines.hpp"
 #include "optimizer/Optimization_inlines.hpp"
 #include "optimizer/Optimizations.hpp"
 #include "optimizer/Optimizer.hpp"

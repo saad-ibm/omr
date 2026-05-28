@@ -40,6 +40,7 @@
 #include "infra/Assert.hpp"
 #include "infra/List.hpp"
 #include "optimizer/VPConstraint.hpp"
+#include "optimizer/OMROptimization_inlines.hpp"
 #include "optimizer/ValuePropagation.hpp"
 #include "ras/Logger.hpp"
 #include "runtime/Runtime.hpp"
