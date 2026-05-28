@@ -131,7 +131,7 @@ public:
     const char *name();
     virtual const char *optDetailString() const throw() = 0;
 
-    inline bool trace();
+    bool trace();
     void setTrace(bool trace = true);
     /**
      * @brief Checks if opt has any trace options specified
