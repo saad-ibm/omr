@@ -204,7 +204,7 @@ struct AssertionFailure : public virtual CompilationException {
 
 #define TR_UNIMPLEMENTED() ::TR::fatal_assertion(__FILE__, __LINE__, NULL, "Unimplemented function: %s", __FUNCTION__)
 
-#if defined(DEBUG) || defined(PROD_WITH_ASSUMES)
+// #if defined(DEBUG) || defined(PROD_WITH_ASSUMES)
 
 #define TR_ASSERT(condition, format, ...)                                                             \
     do {                                                                                              \
@@ -216,16 +216,16 @@ struct AssertionFailure : public virtual CompilationException {
         (condition) ? (void)0 : TR::assertion(__FILE__, __LINE__, #condition, format, ##__VA_ARGS__); \
     } while (0)
 
-#else
+// #else
 
-#define TR_ASSERT(condition, format, ...) (void)0
+// #define TR_ASSERT(condition, format, ...) (void)0
 
-#define TR_ASSERT_SAFE_FATAL(condition, format, ...)                           \
-    do {                                                                       \
-        (condition) ? (void)0 : TR::assertion(__FILE__, __LINE__, NULL, NULL); \
-    } while (0)
+// #define TR_ASSERT_SAFE_FATAL(condition, format, ...)                           \
+//     do {                                                                       \
+//         (condition) ? (void)0 : TR::assertion(__FILE__, __LINE__, NULL, NULL); \
+//     } while (0)
 
-#endif
+// #endif
 
 #if defined(DEBUG) || defined(EXPECT_BUILD)
 #define Expect(x) TR_ASSERT((x), "Expectation Failure:")
