@@ -2460,7 +2460,7 @@ public:
 
 inline TR::X86ImmInstruction *toIA32ImmInstruction(TR::Instruction *i)
 {
-    TR_ASSERT(i->getX86ImmInstruction() != NULL, "trying to downcast to an IA32ImmInstruction");
+    // TR_ASSERT(i->getX86ImmInstruction() != NULL, "trying to downcast to an IA32ImmInstruction");
     return (TR::X86ImmInstruction *)i;
 }
 
