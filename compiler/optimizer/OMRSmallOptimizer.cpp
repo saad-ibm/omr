@@ -884,7 +884,7 @@ int32_t OMR::SmallOptimizer::performOptimization(const OptimizationStrategy *opt
             justSetLastRun = true;
             break;
         default:
-            TR_ASSERT(0, "unexpection optimization flags");
+            TR_ASSERT(0, "unexpected optimization flags - optimization->_options == %d\n", optimization->_options);
     }
 
     if (doThisOptimizationIfEnabled && manager->getRequestedBlocks()->isEmpty())
