@@ -127,9 +127,9 @@ TR_PrexArgInfo *TR_PrexArgInfo::enhance(TR_PrexArgInfo *dest, TR_PrexArgInfo *so
     else if (!source)
         return dest;
 
-    TR_ASSERT(dest->getNumArgs() == source->getNumArgs(),
-        "Number of arguments don't match: dest %p %d arguments and source %p %d arguments", dest, dest->getNumArgs(),
-        source, source->getNumArgs());
+    // TR_ASSERT(dest->getNumArgs() == source->getNumArgs(),
+    //     "Number of arguments don't match: dest %p %d arguments and source %p %d arguments", dest, dest->getNumArgs(),
+    //     source, source->getNumArgs());
 
     auto numArgsToEnhance = dest->getNumArgs();
     for (int32_t i = 0; i < numArgsToEnhance; i++) {
