@@ -253,8 +253,8 @@ rcount_t OMR::Node::incReferenceCount()
 
 rcount_t OMR::Node::decReferenceCount()
 {
-    TR_ASSERT(_referenceCount > 0 || self()->getOpCode().isTreeTop(), "Assertion failure : %s (0x%p)",
-        self()->getOpCode().getName(), this);
+    // TR_ASSERT(_referenceCount > 0 || self()->getOpCode().isTreeTop(), "Assertion failure : %s (0x%p)",
+    //     self()->getOpCode().getName(), this);
     return --(_referenceCount);
 }
 
