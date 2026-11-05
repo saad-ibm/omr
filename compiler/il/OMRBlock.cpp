@@ -85,8 +85,12 @@ TR::Block *OMR::Block::createEmptyBlock(TR::Compilation *comp, int32_t frequency
 {
     if (!comp->isPeekingMethod() && (comp->getFlowGraph()->getMaxFrequency() >= 0))
         {
-        // TR_ASSERT((frequency >= 0), "Block frequency must be non negative\n");
-        // Test: -1 is a valid "unknown" sentinel used throughout the codebase (Bug 5)
+        // DIAGNOSTIC (Bug 5): temporary, test-prod-with-assumes only
+        TR_ASSERT((frequency >= 0),
+            "BUG5DIAG overload=comp freq=%d maxFreq=%d like=%d likeFreq=%d likeCold=%d method=%s\n",
+            frequency, comp->getFlowGraph()->getMaxFrequency(),
+            block ? (int)block->getNumber() : -99, block ? (int)block->getFrequency() : -99,
+            block ? (int)block->isCold() : -99, comp->signature());
         }
     return TR::Block::createEmptyBlock(0, comp, frequency, block);
 }
@@ -262,8 +266,12 @@ int32_t OMR::Block::getNumberOfRealTreeTops()
 TR::Block *OMR::Block::createEmptyBlock(TR::Node *n, TR::Compilation *comp, int32_t frequency, TR::Block *block)
 {
     if (!comp->isPeekingMethod() && (comp->getFlowGraph()->getMaxFrequency() >= 0)) {
-        // TR_ASSERT((frequency >= 0), "Block frequency must be non negative\n");
-        // Test: -1 is a valid "unknown" sentinel used throughout the codebase (Bug 5)
+        // DIAGNOSTIC (Bug 5): temporary, test-prod-with-assumes only
+        TR_ASSERT((frequency >= 0),
+            "BUG5DIAG overload=node freq=%d maxFreq=%d like=%d likeFreq=%d likeCold=%d method=%s\n",
+            frequency, comp->getFlowGraph()->getMaxFrequency(),
+            block ? (int)block->getNumber() : -99, block ? (int)block->getFrequency() : -99,
+            block ? (int)block->isCold() : -99, comp->signature());
     }
 
     if (block != NULL)
