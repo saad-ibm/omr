@@ -3259,6 +3259,19 @@ void TR_LoopVersioner::versionNaturalLoop(TR_RegionStructure *whileLoop, List<TR
                 if (!fallsThrough)
                     _cfg->addEdge(TR::CFGEdge::createEdge(nextClonedBlock, succ, trMemory()));
                 else {
+                    // DIAGNOSTIC (Bug 5): temporary, test-prod-with-assumes only
+                    TR_ASSERT(comp()->isPeekingMethod() || (comp()->getFlowGraph()->getMaxFrequency() < 0)
+                            || ((*edge)->getFrequency() >= 0),
+                        "BUG5DIAG2 site=3263 edgeFreq=%d from=%d(freq=%d cold=%d) to=%d(freq=%d cold=%d) "
+                        "cloned=%d(freq=%d cold=%d) neitherLoopCold=%d onlySpecializingLoops=%d maxFreq=%d "
+                        "maxEdgeFreq=%d method=%s\n",
+                        (int)(*edge)->getFrequency(), (int)nextBlock->getNumber(), (int)nextBlock->getFrequency(),
+                        (int)nextBlock->isCold(), (int)succ->getNumber(), (int)succ->getFrequency(),
+                        (int)succ->isCold(), (int)nextClonedBlock->getNumber(), (int)nextClonedBlock->getFrequency(),
+                        (int)nextClonedBlock->isCold(), (int)_neitherLoopCold, (int)shouldOnlySpecializeLoops(),
+                        (int)comp()->getFlowGraph()->getMaxFrequency(),
+                        (int)comp()->getFlowGraph()->getMaxEdgeFrequency(), comp()->signature());
+
                     TR::Block *newGotoBlock
                         = TR::Block::createEmptyBlock(lastNode, comp(), (*edge)->getFrequency(), nextClonedBlock);
                     newGotoBlock->setIsSpecialized(nextClonedBlock->isSpecialized());
