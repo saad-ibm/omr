@@ -1897,13 +1897,12 @@ TR::Block *OMR::Block::splitEdge(TR::Block *from, TR::Block *to, TR::Compilation
     TR::Block *newBlock;
     if (entryTree) {
         const bool isExceptionEdge = to->isCatchBlock();
-        int32_t freq = from->getEdge(to)->getFrequency();
+        const bool isColdEdge = from->isCold() || to->isCold();
+        int32_t freq = isColdEdge ? TR::Block::getMinColdFrequency(from, to) : from->getEdge(to)->getFrequency();
         newBlock = TR::Block::createEmptyBlock(exitNode, c, freq, from);
 
-        if (from->isCold() || to->isCold()) {
-            newBlock->setFrequency(TR::Block::getMinColdFrequency(from, to));
+        if (isColdEdge)
             newBlock->setIsCold();
-        }
 
         cfg->addNode(newBlock, from->getCommonParentStructureIfExists(to, cfg));
         from->getLastRealTreeTop()->adjustBranchOrSwitchTreeTop(comp, to->getEntry(), newBlock->getEntry());
